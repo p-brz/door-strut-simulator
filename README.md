@@ -4,7 +4,7 @@ lamp-strut-simulator
 Lamp simulator for Home Shell system
 
 ### Descrição ###
-**Este é um projeto complementar ao [Home Shell](http://github.com/alisonbento/home-shell). Verifique antes de qualquer coisa!**
+*Este é um projeto complementar ao [Home Shell](http://github.com/alisonbento/home-shell). Verifique antes de qualquer coisa!*
 
 Simulador de lâmpadas feito em Python 2.7 que se integra ao sistema Home Shell.
 
