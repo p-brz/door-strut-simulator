@@ -14,14 +14,19 @@ class LampStrut:
       {
         'name' : 'desligar',
         'method' : self.matchKey('turnOff')
+      },
+      {
+        'name' : 'definir_brilho',
+        'method' : self.matchKey('setBright')
       }
     ]
 
     self.status = {
-      'ligada' : 0
+      'ligada' : 0,
+      'brilho' : 100
     }
 
-  def callService(self, service):
+  def callService(self, service, params=None):
     valid = False
     method = None
     for appService in self.services:
@@ -33,24 +38,30 @@ class LampStrut:
       return False
 
 
-    method()
+    method(params)
     return True
 
   def matchKey(self, method):
 
-    def turnOn():
+    def turnOn(params=None):
       print('Turning on')
       self.status['ligada'] = 1
 
-    def turnOff():
+    def turnOff(params=None):
       print('Turning off')
       self.status['ligada'] = 0
 
+    def setBright(params=None):
+      print('set Bright. params: ', params)
+      if(params and 'brilho' in params):
+        self.status['brilho'] = int(params['brilho'])
+
     if method == 'turnOn':
       return turnOn
-
     elif method == 'turnOff':
       return turnOff
+    elif method == 'setBright':
+      return setBright
 
   def getJsonServices(self):
     json = {}
