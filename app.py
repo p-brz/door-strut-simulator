@@ -1,5 +1,5 @@
 #flask/bin/python
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from lamp import *
 from guilamp import *
 
@@ -18,6 +18,11 @@ def ligar():
 @app.route('/services/desligar', methods=['GET'])
 def desligar():
   lp.callService('desligar')
+  return jsonify(lp.getJsonStatus())
+
+@app.route('/services/definir_brilho', methods=['GET'])
+def set_bright():
+  lp.callService('definir_brilho', request.args)
   return jsonify(lp.getJsonStatus())
 
 @app.route('/services', methods=['GET'])
