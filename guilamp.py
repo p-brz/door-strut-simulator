@@ -36,6 +36,9 @@ class GuiLamp(threading.Thread):
       temp.set_alpha(opacity)        
       target.blit(temp, location)
 
+  def stop(self):
+    self.isRunning = False
+
   def run(self):
     print("run");
     pygame.init()
