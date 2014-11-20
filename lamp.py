@@ -22,9 +22,16 @@ class LampStrut:
     ]
 
     self.status = {
+      'power'  : 60, #in watts
       'ligada' : 0,
       'brilho' : 100
     }
+
+  def isOn(self):
+    return self.status['ligada'] != 0
+
+  def getPower(self):
+    return self.status['power']
 
   def callService(self, service, params=None):
     valid = False
