@@ -8,8 +8,9 @@ class GuiLamp(threading.Thread):
     threading.Thread.__init__(self)
     self.threadID = threadID
     self.lamp = lamp
-    self.isRunning = True
+    self.running = True
     self.images = {}
+    self.lock = threading.RLock()
     print("Init lamp. ThreadID: ", threadID);
 
   def getLampImage(self):
@@ -36,8 +37,16 @@ class GuiLamp(threading.Thread):
       temp.set_alpha(opacity)        
       target.blit(temp, location)
 
+  def isRunning(self):
+    self.lock.acquire()
+    isRunningNow = self.running
+    self.lock.release()
+    return isRunningNow
+
   def stop(self):
-    self.isRunning = False
+    self.lock.acquire()
+    self.running = False
+    self.lock.release()
 
   def run(self):
     print("run");
@@ -46,7 +55,7 @@ class GuiLamp(threading.Thread):
 
     count = 0
     image = self.getLampDrawable();
-    while self.isRunning:
+    while self.isRunning():
       for event in pygame.event.get():
           if event.type == pygame.QUIT:
               pygame.quit()
