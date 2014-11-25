@@ -13,7 +13,7 @@ class LampConsumption(WaitingThread):
     self.consumptionObservers = []
 
   def addConsumptionObserver(self, observer):
-    self.consumptionObservers.add(observer)
+    self.consumptionObservers.append(observer)
   def removeConsumptionObserver(self, observer):
     self.consumptionObservers.remove(observer)
 

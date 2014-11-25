@@ -3,6 +3,7 @@ from flask import Flask, jsonify, request
 from lamp import *
 from guilamp import *
 from consumption import *
+from networkConsumptionObserver import *
 
 app = Flask(__name__)
 lp = LampStrut()
@@ -38,6 +39,13 @@ def status():
 @app.route('/consumption', methods=['GET'])
 def consumptionHistory():
   return jsonify({"consumption" : consumption.getConsumptionHistory()})
+
+@app.route('/register_notifier', methods=['GET'])
+def registerNotifier():
+  consumption.addConsumptionObserver(NetworkConsumptionObserver(request.args))
+  return jsonify({"response" : "ok"})
+
+#TODO: como remover observer??
 
 
 
