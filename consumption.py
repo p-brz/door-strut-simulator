@@ -1,6 +1,7 @@
 from waitingthread import *
 import time
 
+
 class LampConsumption(WaitingThread):
 
   def __init__(self, lamp, publishConsumptionTime=8, measureTime = 5):
@@ -49,7 +50,7 @@ class LampConsumption(WaitingThread):
   def publishConsumption(self, now):
     consumptionEvent = {}
     consumptionEvent['value'] = self.consumptionAccumulator
-    consumptionEvent['time'] = now
+    consumptionEvent['date'] = now
     self.consumptionAccumulator = 0
     self.consumptionHistory.append(consumptionEvent)
     print("notify consumption: ", consumptionEvent)
