@@ -48,8 +48,8 @@ def registerNotifier():
 #TODO: como remover observer??
 
 
-
 if __name__ == '__main__':
+
     gui = GuiLamp(1, lp)
     gui.start()
 

@@ -1,9 +1,16 @@
+import requests
+
+
 class LampStrut:
 
     def __init__(self):
 
+        self.observers = []
+        self.server = 'localhost:8080'
         self.hash = '5273148ba316de3ef878971745bb7a222660ca42'
         self.consumption_key = 'CONSUMPTION'
+
+        self.has_changed = False
 
         self.configs = {
             'type': 'lamp'
@@ -54,6 +61,9 @@ class LampStrut:
 
 
         method(params)
+        for observer in self.observers:
+            observer.on_change(self)
+
         return True
 
     def matchKey(self, method):
