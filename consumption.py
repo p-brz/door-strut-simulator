@@ -16,6 +16,7 @@ class LampConsumption(WaitingThread):
 
     def addConsumptionObserver(self, observer):
         self.consumptionObservers.append(observer)
+
     def removeConsumptionObserver(self, observer):
         self.consumptionObservers.remove(observer)
 
@@ -51,8 +52,9 @@ class LampConsumption(WaitingThread):
     def publishConsumption(self, now):
         consumptionEvent = {}
         consumptionEvent['value'] = self.consumptionAccumulator
+        print(self.consumptionAccumulator)
         consumptionEvent['date'] = now
-        self.consumptionAccumulator = 0
+        #self.consumptionAccumulator = 0
         self.consumptionHistory.append(consumptionEvent)
         print("notify consumption: ", consumptionEvent)
         for observer in self.consumptionObservers :

@@ -1,4 +1,6 @@
 #flask/bin/python
+
+
 from flask import Flask, jsonify, request
 from lamp import *
 from guilamp import *
@@ -40,10 +42,30 @@ def status():
 def consumptionHistory():
     return jsonify({"consumption" : consumption.getConsumptionHistory()})
 
+@app.route('/get_consumption/', methods=['GET'])
+def getConsumption():
+    val = consumption.consumptionAccumulator
+    return jsonify({"consumed": val})
+
 @app.route('/register_notifier/', methods=['GET'])
 def registerNotifier():
     consumption.addConsumptionObserver(NetworkConsumptionObserver(request.args, lp))
-    return jsonify({"response" : "ok"})
+    return jsonify({"response": "ok"})
+
+@app.route('/get_extras/', methods=['GET'])
+def get_extras():
+    consumption_val = consumption.consumptionAccumulator
+    now = time.time()
+
+    return jsonify({
+        'extras': [
+            {
+                'id': now,
+                'tag': 'CONSUMPTION',
+                'value': consumption_val,
+            }
+        ]
+    })
 
 #TODO: como remover observer??
 
