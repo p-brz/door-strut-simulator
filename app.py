@@ -2,87 +2,55 @@
 
 
 from flask import Flask, jsonify, request
-from lamp import *
-from guilamp import *
-from consumption import *
-from networkConsumptionObserver import *
+from door import *
+from guidoor import *
 
 app = Flask(__name__)
-lp = LampStrut()
-consumption = LampConsumption(lp)
+appliance = DoorStrut()
 
 @app.route('/')
 def index():
-    return jsonify(lp.getJson())
+    return jsonify(appliance.getJson())
 
-@app.route('/services/ligar/', methods=['GET'])
-def ligar():
-    lp.callService('ligar')
-    return jsonify(lp.getJsonStatus())
+@app.route('/services/abrir/', methods=['GET'])
+def abrir():
+    appliance.callService('abrir')
+    return jsonify(appliance.getJsonStatus())
 
-@app.route('/services/desligar/', methods=['GET'])
-def desligar():
-    lp.callService('desligar')
-    return jsonify(lp.getJsonStatus())
+@app.route('/services/fechar/', methods=['GET'])
+def fechar():
+    appliance.callService('fechar')
+    return jsonify(appliance.getJsonStatus())
+    
+@app.route('/services/trancar/', methods=['GET'])
+def trancar():
+    appliance.callService('trancar')
+    return jsonify(appliance.getJsonStatus())
+    
+@app.route('/services/destrancar/', methods=['GET'])
+def destrancar():
+    appliance.callService('destrancar')
+    return jsonify(appliance.getJsonStatus())
 
-@app.route('/services/definir_brilho/', methods=['GET'])
-def set_bright():
-    lp.callService('definir_brilho', request.args)
-    return jsonify(lp.getJsonStatus())
 
 @app.route('/services/', methods=['GET'])
 def getServices():
-    return jsonify(lp.getJsonServices())
+    return jsonify(appliance.getJsonServices())
 
 @app.route('/status/', methods=['GET'])
 def status():
-    return jsonify(lp.getJsonStatus())
-
-@app.route('/consumption/', methods=['GET'])
-def consumptionHistory():
-    return jsonify({"consumption" : consumption.getConsumptionHistory()})
-
-@app.route('/get_consumption/', methods=['GET'])
-def getConsumption():
-    val = consumption.consumptionAccumulator
-    return jsonify({"consumed": val})
-
-@app.route('/register_notifier/', methods=['GET'])
-def registerNotifier():
-    consumption.addConsumptionObserver(NetworkConsumptionObserver(request.args, lp))
-    return jsonify({"response": "ok"})
-
-@app.route('/get_extras/', methods=['GET'])
-def get_extras():
-    consumption_val = consumption.consumptionAccumulator
-    now = time.time()
-
-    return jsonify({
-        'extras': [
-            {
-                'id': now,
-                'tag': 'CONSUMPTION',
-                'value': consumption_val,
-            }
-        ]
-    })
-
-#TODO: como remover observer??
+    return jsonify(appliance.getJsonStatus())
 
 
 if __name__ == '__main__':
 
-    gui = GuiLamp(1, lp)
+    gui = GuiDoor(1, appliance)
     gui.start()
 
-    consumption.start()
-
-    app.config['SERVER_NAME'] = 'localhost:5000'
+    app.config['SERVER_NAME'] = 'localhost:5001'
     app.run(debug=True, use_reloader=False)
 
     #stop other threads
     gui.stop()
-    consumption.stop()
     gui.join()
-    consumption.join()
   
