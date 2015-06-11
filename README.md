@@ -1,12 +1,12 @@
-lamp-strut-simulator
+door-strut-simulator
 ====================
 
-Lamp simulator for Home Shell system
+Door simulator for Home Shell system (baseado em: https://github.com/alisonbnt/lamp-strut-simulator)
 
 ### Descrição ###
 *Este é um projeto complementar ao [Home Shell](http://github.com/alisonbento/home-shell). Verifique antes de qualquer coisa!*
 
-Simulador de lâmpadas feito em Python 2.7 que se integra ao sistema Home Shell.
+Simulador de portas feito em Python 2.7 que se integra ao sistema Home Shell.
 
 ### Requisitos ###
 
@@ -21,15 +21,15 @@ Para executar este simulador, você vai precisar de:
 python app.py
 ```
 
-Este comando abrirá uma janela contendo uma lâmpada. Você pode acessá-la pelo endereço
+Este comando abrirá uma janela contendo uma porta. Você pode acessá-la pelo endereço
 
 ```
-http://localhost:5000
+http://localhost:5001
 ```
 
 ### Comandos ###
 
-* / - Lâmpada como um todo
-* /services - Serviços da lâmpada
+* / - Porta como um todo
+* /services - Serviços da porta
 * /services/nome_servico - executa o serviço "nome_servico"
-* /status - Lista os status da lâmpada
+* /status - Lista os status da porta
